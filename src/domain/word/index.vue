@@ -15,17 +15,26 @@ const { word } = toRefs(props)
 const verba: Ref<Word | null> = ref(null)
 const search = useSearch()
 
+const play = () => {
+  if (verba.value?.audio) {
+    const url = `https://audio.vocab.com/1.0/us/${verba.value?.audio}.mp3`
+    new Audio(url).play()
+  }
+}
+
 watch(word, () => {
   search(word.value)
     .then((result) => {
       verba.value = result
       nextTick(() => emits('update'))
+      play()
     })
 }, { immediate: true })
 
+defineExpose({ play })
 </script>
 <template>
-  <div class="max-w-120 max-h-140 overflow-auto">
+  <div class="max-w-120 max-h-130 overflow-auto">
     <template v-if="verba">
       <p>{{ verba.short }}</p>
       <p>{{ verba.long }}</p>

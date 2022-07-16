@@ -16,6 +16,8 @@ const update = () => {
   updated.value = true
   popover.value.syncPosition()
 }
+
+const verba = ref()
 </script>
 <template>
   <n-popover ref="popover" placement="right" :show="!!word" :x="pos.x" :y="pos.y" trigger="manual">
@@ -24,9 +26,10 @@ const update = () => {
         <n-text type="primary">
           {{ word }}
         </n-text>
+        <div class="inline-block ml-2 align-middle cursor-pointer" i-radix-icons:speaker-loud @click="verba.play()" />
       </n-h1>
       <div v-if="last && updated" i-ion-close-round class="absolute right-2 top-2 text-xl cursor-pointer" @click="emits('close')" />
     </template>
-    <word-vue :word="word" @update="update" />
+    <word-vue ref="verba" :word="word" @update="update" />
   </n-popover>
 </template>

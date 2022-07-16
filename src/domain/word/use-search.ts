@@ -52,6 +52,7 @@ export function useSearch() {
       .then((dom) => {
         const d = Q(dom)
         const word = text(d.q('.word-area h1')?.firstChild?.textContent)
+        const audio = d.q('.word-area h1 a.audio')?.getAttribute('data-audio') || ''
         const short = d.t('.word-area .short')
         const long = d.t('.word-area .long')
         const family = parsefamilys(d.q('.section.family'))
@@ -63,6 +64,7 @@ export function useSearch() {
           long,
           family,
           definitions,
+          audio,
         }
 
         return verba

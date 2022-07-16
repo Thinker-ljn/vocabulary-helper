@@ -15,6 +15,7 @@ export interface Definition {
 
 export interface Word {
   text: string
+  audio: string
   short: string
   long: string
   family: { word: string; pages: number; tips: string; id: number }[]
