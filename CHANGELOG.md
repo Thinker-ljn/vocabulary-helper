@@ -1,3 +1,12 @@
+# [1.1.0](https://github.com/Thinker-ljn/vocabulary-helper/compare/v1.0.0...v1.1.0) (2022-07-16)
+
+
+### Features
+
+* add audio ([02ba880](https://github.com/Thinker-ljn/vocabulary-helper/commit/02ba88077a5a107e37f0843cca84ac66fa733a18))
+
+
+
 # 1.0.0 (2022-06-19)
 
 

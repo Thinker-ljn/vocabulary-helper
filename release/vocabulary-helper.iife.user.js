@@ -1,17 +1,17 @@
 /*!
 // ==UserScript==
 // @name              vocabulary-helper
-// @version           1.0.0
+// @version           1.1.0
 // @description       A Tampermonkey Plugin for search vocabulary.
 // @author            Thinker-ljn
 // @require           https://unpkg.com/vue@3.2.37
-// @require           https://unpkg.com/@vueuse/core@8.7.4
-// @require           https://unpkg.com/@vueuse/shared@8.7.4
+// @require           https://unpkg.com/@vueuse/core@8.9.3
+// @require           https://unpkg.com/@vueuse/shared@8.9.3
 // @require           https://unpkg.com/axios@0.26.1
 // @require           https://unpkg.com/lodash@4.17.21/lodash.js
 // @require           https://unpkg.com/@juggle/resize-observer@3.3.1
 // @require           data:text/javascript;base64,dGhpcy5nbG9iYWxUaGlzPXRoaXM7dGhpcy5WdWU9VnVlOw==
-// @require           https://unpkg.com/naive-ui@2.30.4/dist/index.prod.js
+// @require           https://unpkg.com/naive-ui@2.31.0/dist/index.prod.js
 // @require           https://unpkg.com/axios-userscript-adapter@0.2.0/dist/axiosGmxhrAdapter.min.js
 // @match             https://www.vocabulary.com/*
 // @connect           www.vocabulary.com
@@ -22,7 +22,7 @@
 */
 (function(vue, naiveUi, axios2, gmxhrAdapter) {
   "use strict";
-  GM_addStyle("html,\nbody,\n#app {\n  height: 100%;\n  margin: 0;\n  padding: 0;\n}\n@font-face {\n  font-family: 'DM Mono';\n  font-style: normal;\n  font-weight: 400;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/dmmono/v10/aFTU7PB1QTsUX8KYhh0.ttf) format('truetype');\n}\n@font-face {\n  font-family: 'DM Sans';\n  font-style: normal;\n  font-weight: 400;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/dmsans/v11/rP2Hp2ywxg089UriOZQ.ttf) format('truetype');\n}\n@font-face {\n  font-family: 'DM Serif Display';\n  font-style: normal;\n  font-weight: 400;\n  font-display: swap;\n  src: url(https://fonts.gstatic.com/s/dmserifdisplay/v10/-nFnOHM81r4j6k0gjAW3mujVU2B2K_c.ttf) format('truetype');\n}\n.i-ion-close-round,[i-ion-close-round=\"\"]{--un-icon:url(\"data:image/svg+xml;utf8,%3Csvg preserveAspectRatio='xMidYMid meet' viewBox='0 0 512 512' width='1.2em' height='1.2em' xmlns='http://www.w3.org/2000/svg' %3E%3Cpath d='M437.5 386.6L306.9 256l130.6-130.6c14.1-14.1 14.1-36.8 0-50.9-14.1-14.1-36.8-14.1-50.9 0L256 205.1 125.4 74.5c-14.1-14.1-36.8-14.1-50.9 0-14.1 14.1-14.1 36.8 0 50.9L205.1 256 74.5 386.6c-14.1 14.1-14.1 36.8 0 50.9 14.1 14.1 36.8 14.1 50.9 0L256 306.9l130.6 130.6c14.1 14.1 36.8 14.1 50.9 0 14-14.1 14-36.9 0-50.9z' fill='currentColor'/%3E%3C/svg%3E\");mask:var(--un-icon) no-repeat;mask-size:100% 100%;-webkit-mask:var(--un-icon) no-repeat;-webkit-mask-size:100% 100%;background-color:currentColor;width:1.2em;height:1.2em;}.absolute{position:absolute;}.right-2{right:0.5rem;}.top-2{top:0.5rem;}.my-2{margin-top:0.5rem;margin-bottom:0.5rem;}.mb-1{margin-bottom:0.25rem;}.mr-2{margin-right:0.5rem;}.max-h-140{max-height:35rem;}.max-w-120{max-width:30rem;}.min-w-20{min-width:5rem;}.flex{display:flex;}.cursor-pointer{cursor:pointer;}.overflow-auto{overflow:auto;}.border{border-width:1px;border-style:solid;}.p-2{padding:0.5rem;}.text-right{text-align:right;}.text-xl{font-size:1.25rem;line-height:1.75rem;}");
+  GM_addStyle("html,\nbody,\n#app {\n  height: 100%;\n  margin: 0;\n  padding: 0;\n}\n.i-ion-close-round,[i-ion-close-round=\"\"]{--un-icon:url(\"data:image/svg+xml;utf8,%3Csvg preserveAspectRatio='xMidYMid meet' viewBox='0 0 512 512' width='1.2em' height='1.2em' xmlns='http://www.w3.org/2000/svg' %3E%3Cpath d='M437.5 386.6L306.9 256l130.6-130.6c14.1-14.1 14.1-36.8 0-50.9-14.1-14.1-36.8-14.1-50.9 0L256 205.1 125.4 74.5c-14.1-14.1-36.8-14.1-50.9 0-14.1 14.1-14.1 36.8 0 50.9L205.1 256 74.5 386.6c-14.1 14.1-14.1 36.8 0 50.9 14.1 14.1 36.8 14.1 50.9 0L256 306.9l130.6 130.6c14.1 14.1 36.8 14.1 50.9 0 14-14.1 14-36.9 0-50.9z' fill='currentColor'/%3E%3C/svg%3E\");mask:var(--un-icon) no-repeat;mask-size:100% 100%;-webkit-mask:var(--un-icon) no-repeat;-webkit-mask-size:100% 100%;background-color:currentColor;width:1.2em;height:1.2em;}.i-radix-icons\\:speaker-loud,[i-radix-icons\\:speaker-loud=\"\"]{--un-icon:url(\"data:image/svg+xml;utf8,%3Csvg preserveAspectRatio='xMidYMid meet' viewBox='0 0 15 15' width='1.2em' height='1.2em' xmlns='http://www.w3.org/2000/svg' %3E%3Cpath fill='currentColor' fill-rule='evenodd' d='M7.47 1.05a.5.5 0 0 1 .28.45v12a.5.5 0 0 1-.807.395L3.221 11H1.5A1.5 1.5 0 0 1 0 9.5v-4A1.5 1.5 0 0 1 1.5 4h1.721l3.722-2.895a.5.5 0 0 1 .527-.054Zm-.72 1.472L3.7 4.895A.5.5 0 0 1 3.393 5H1.5a.5.5 0 0 0-.5.5v4a.5.5 0 0 0 .5.5h1.893a.5.5 0 0 1 .307.105l3.05 2.373V2.522Zm3.528 1.326a.4.4 0 0 1 .555.111a6.407 6.407 0 0 1 0 7.081a.4.4 0 0 1-.666-.443a5.607 5.607 0 0 0 0-6.194a.4.4 0 0 1 .111-.555Zm2.4-2.418a.4.4 0 0 0-.61.518a8.602 8.602 0 0 1 0 11.104a.4.4 0 0 0 .61.518a9.402 9.402 0 0 0 0-12.14Z' clip-rule='evenodd'/%3E%3C/svg%3E\");mask:var(--un-icon) no-repeat;mask-size:100% 100%;-webkit-mask:var(--un-icon) no-repeat;-webkit-mask-size:100% 100%;background-color:currentColor;width:1.2em;height:1.2em;}.absolute{position:absolute;}.right-2{right:0.5rem;}.top-2{top:0.5rem;}.my-2{margin-top:0.5rem;margin-bottom:0.5rem;}.mb-1{margin-bottom:0.25rem;}.ml-2{margin-left:0.5rem;}.mr-2{margin-right:0.5rem;}.inline-block{display:inline-block;}.max-h-130{max-height:32.5rem;}.max-w-120{max-width:30rem;}.min-w-20{min-width:5rem;}.flex{display:flex;}.cursor-pointer{cursor:pointer;}.overflow-auto{overflow:auto;}.border{border-width:1px;border-style:solid;}.p-2{padding:0.5rem;}.text-right{text-align:right;}.align-middle{vertical-align:middle;}.text-xl{font-size:1.25rem;line-height:1.75rem;}");
   function _interopDefaultLegacy(e) {
     return e && typeof e === "object" && "default" in e ? e : { "default": e };
   }
@@ -167,9 +167,10 @@
     };
     const search = (input) => {
       return getHTMLDOM(`https://www.vocabulary.com/dictionary/${input}`).then((dom) => {
-        var _a, _b;
+        var _a, _b, _c;
         const d = Q(dom);
         const word = text((_b = (_a = d.q(".word-area h1")) == null ? void 0 : _a.firstChild) == null ? void 0 : _b.textContent);
+        const audio = ((_c = d.q(".word-area h1 a.audio")) == null ? void 0 : _c.getAttribute("data-audio")) || "";
         const short = d.t(".word-area .short");
         const long = d.t(".word-area .long");
         const family = parsefamilys(d.q(".section.family"));
@@ -179,14 +180,15 @@
           short,
           long,
           family,
-          definitions
+          definitions,
+          audio
         };
         return verba;
       });
     };
     return search;
   }
-  const _hoisted_1 = { class: "max-w-120 max-h-140 overflow-auto" };
+  const _hoisted_1 = { class: "max-w-120 max-h-130 overflow-auto" };
   const _hoisted_2 = { class: "flex" };
   const _hoisted_3 = { class: "min-w-20 mr-2 text-right" };
   const _hoisted_4 = { class: "min-w-20 mr-2 text-right" };
@@ -199,17 +201,26 @@
       word: null
     },
     emits: ["update"],
-    setup(__props, { emit: emits }) {
+    setup(__props, { expose, emit: emits }) {
       const props = __props;
       const { word } = vue.toRefs(props);
       const verba = vue.ref(null);
       const search = useSearch();
+      const play = () => {
+        var _a, _b;
+        if ((_a = verba.value) == null ? void 0 : _a.audio) {
+          const url = `https://audio.vocab.com/1.0/us/${(_b = verba.value) == null ? void 0 : _b.audio}.mp3`;
+          new Audio(url).play();
+        }
+      };
       vue.watch(word, () => {
         search(word.value).then((result) => {
           verba.value = result;
           vue.nextTick(() => emits("update"));
+          play();
         });
       }, { immediate: true });
+      expose({ play });
       return (_ctx, _cache) => {
         const _component_n_tag = naiveUi.NTag;
         const _component_n_space = naiveUi.NSpace;
@@ -335,6 +346,7 @@
         updated.value = true;
         popover.value.syncPosition();
       };
+      const verba = vue.ref();
       return (_ctx, _cache) => {
         const _component_n_text = naiveUi.NText;
         const _component_n_h1 = naiveUi.NH1;
@@ -359,6 +371,11 @@
                     vue.createTextVNode(vue.toDisplayString(__props.word), 1)
                   ]),
                   _: 1
+                }),
+                vue.createElementVNode("div", {
+                  class: "inline-block ml-2 align-middle cursor-pointer",
+                  "i-radix-icons:speaker-loud": "",
+                  onClick: _cache[0] || (_cache[0] = ($event) => verba.value.play())
                 })
               ]),
               _: 1
@@ -367,11 +384,13 @@
               key: 0,
               "i-ion-close-round": "",
               class: "absolute right-2 top-2 text-xl cursor-pointer",
-              onClick: _cache[0] || (_cache[0] = ($event) => emits("close"))
+              onClick: _cache[1] || (_cache[1] = ($event) => emits("close"))
             })) : vue.createCommentVNode("", true)
           ]),
           default: vue.withCtx(() => [
             vue.createVNode(_sfc_main$2, {
+              ref_key: "verba",
+              ref: verba,
               word: __props.word,
               onUpdate: update
             }, null, 8, ["word"])
@@ -409,8 +428,8 @@
       };
     }
   });
-  var main = /* @__PURE__ */ (() => "html,\nbody,\n#app {\n  height: 100%;\n  margin: 0;\n  padding: 0;\n}\n")();
-  var __uno = /* @__PURE__ */ (() => "#--unocss--{layer:__ALL__}")();
+  var main = "";
+  var __uno = "";
   const container = (parent, cls = "") => {
     const appContainer = document.createElement("div");
     if (cls)
