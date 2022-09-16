@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import WordVue from '~/domain/word/index.vue'
+import GoogleVue from '~/domain/google/index.vue'
 defineProps<{
   pos: { x: number; y: number }
   word: string
@@ -27,6 +28,7 @@ const verba = ref()
           {{ word }}
         </n-text>
         <div class="inline-block ml-2 align-middle cursor-pointer" i-radix-icons:speaker-loud @click="verba.play()" />
+        <google-vue :word="word" />
       </n-h1>
       <div v-if="last && updated" i-ion-close-round class="absolute right-2 top-2 text-xl cursor-pointer" @click="emits('close')" />
     </template>

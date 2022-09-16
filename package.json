@@ -9,10 +9,14 @@
     "description": "A Tampermonkey Plugin for search vocabulary.",
     "namespace": "",
     "match": [
-      "https://www.vocabulary.com/*"
+      "https://www.vocabulary.com/*",
+      "https://github.com/*",
+      "https://gitlab.com/*"
     ],
     "connect": [
-      "www.vocabulary.com"
+      "www.vocabulary.com",
+      "www.google.com",
+      "www.google.com.hk"
     ],
     "resource": [],
     "run-at": "document-body",
